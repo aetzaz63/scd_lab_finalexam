@@ -1,0 +1,79 @@
+name: Build and Test Services
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Set up Docker
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    # Cache Docker layers to speed up builds
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-docker-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-docker-
+
+    # Set up Node.js for services
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    # Install dependencies and run tests for each service
+    - name: Install dependencies and run tests for Examination
+      working-directory: services/examination
+      run: |
+        npm install
+        npm test
+
+    - name: Install dependencies and run tests for Attendance
+      working-directory: services/attendance
+      run: |
+        npm install
+        npm test
+
+    - name: Install dependencies and run tests for Faculty
+      working-directory: services/faculty
+      run: |
+        npm install
+        npm test
+
+    - name: Install dependencies and run tests for Student
+      working-directory: services/student
+      run: |
+        npm install
+        npm test
+
+    # Build Docker images for each service
+    - name: Build Docker image for Examination
+      working-directory: services/examination
+      run: docker build -t 20i0964/scd_lab_final:examination .
+
+    - name: Build Docker image for Attendance
+      working-directory: services/attendance
+      run: docker build -t 20i0964/scd_lab_final:attendance .
+
+    - name: Build Docker image for Faculty
+      working-directory: services/faculty
+      run: docker build -t 20i0964/scd_lab_final:faculty .
+
+    - name: Build Docker image for Student
+      working-directory: services/student
+      run: docker build -t 20i0964/scd_lab_final:student .
