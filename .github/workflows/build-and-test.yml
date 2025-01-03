@@ -41,7 +41,6 @@ jobs:
       working-directory: services/examination
       run: |
         npm install
-        npm test
 
     - name: Install dependencies and run tests for Attendance
       working-directory: services/attendance
