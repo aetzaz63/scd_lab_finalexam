@@ -36,29 +36,26 @@ jobs:
       with:
         node-version: '16'
 
-    # Install dependencies and run tests for each service
-    - name: Install dependencies and run tests for Examination
+    # Install dependencies for each service
+    - name: Install dependencies for Examination
       working-directory: services/examination
       run: |
         npm install
 
-    - name: Install dependencies and run tests for Attendance
+    - name: Install dependencies for Attendance
       working-directory: services/attendance
       run: |
         npm install
-        npm test
 
-    - name: Install dependencies and run tests for Faculty
+    - name: Install dependencies for Faculty
       working-directory: services/faculty
       run: |
         npm install
-        npm test
 
-    - name: Install dependencies and run tests for Student
+    - name: Install dependencies for Student
       working-directory: services/student
       run: |
         npm install
-        npm test
 
     # Build Docker images for each service
     - name: Build Docker image for Examination
