@@ -50,7 +50,7 @@ jobs:
 
     # Set up Kubernetes CLI (kubectl)
     - name: Set up Kubernetes CLI
-      uses: azure/setup-kubectl@v2
+      uses: azure/setup-kubectl@v1
       with:
         kubectl-version: 'v1.21.2'
 
